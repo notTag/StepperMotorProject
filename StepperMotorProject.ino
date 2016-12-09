@@ -1,5 +1,4 @@
 #include <BlynkApiArduino.h>
-
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(8,9); //Rx, Tx
 
@@ -26,8 +25,24 @@ void setup() {
 void loop() {
   Blynk.run();
 
+//  fwd(delayTime);
+}
+
+void fwd(int delayTime){
+//  Serial.println(LOW);
   digitalWrite(steppin, HIGH);
   delayMicroseconds(delayTime);
   digitalWrite(steppin, LOW);
   delayMicroseconds(delayTime);
 }
+
+BLYNK_WRITE(V0) {
+  int pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
+  // You can also use:
+  // String i = param.asStr();
+  // double d = param.asDouble();
+  Serial.print("V1 Slider value is: ");
+  Serial.println(pinValue);
+  fwd(pinValue);
+}
+
